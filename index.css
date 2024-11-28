@@ -69,11 +69,12 @@ h1{
     text-align: center;
 }
 .card{
+    font-size: 1fp;
     margin-left: 40px;
     color: #ffffff90;
     background-color: #68686892;
     display:inline-block;
-    width: 15%;
+    width: 20%;
     padding: 0px 8px 0px;
     border-radius:16px;
     backdrop-filter: blur(24px);
