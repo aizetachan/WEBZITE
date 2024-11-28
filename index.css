@@ -1,0 +1,89 @@
+body{
+    font-family: helvetica;
+    max-width:100%;
+    overflow-x: hidden;
+    background-color: 000;
+}
+nav {
+    position:fixed;
+    display:inline-block;
+    background-color: #68686892;
+    top:24px;
+    right: 40px;
+    left: 40px;
+    margin-left:40px;
+    margin-right:40px;
+    border-radius:8px;
+    backdrop-filter: blur(24px);
+    border: 1px solid  #7e7e7e40;
+    z-index: 10;
+    text-align: right;
+    padding-right: 40px;
+    
+
+}
+nav li{
+    color: #ffffff90;
+    font-weight: 500;
+    text-transform: uppercase;
+    display:inline-block;
+    width: 120px;
+    letter-spacing: normal;
+    text-align: center;
+}
+nav li:hover{
+    color: #ffffff;
+}
+.hero {
+    text-align: center;
+    position: relative;
+    top: 80px;
+    display: block;
+    align-items: center;
+    width: 100%;
+
+}
+.hero img {
+    width:100%;
+    height: auto;
+    position: relative;
+    z-index: 0;
+}
+
+h1{
+    width: 100%;
+    position: absolute;
+    z-index: 5;
+    font-size: 160px;
+    color: rgba(233, 233, 233, 0.573);
+    
+
+    top: 50%;  /* position the top  edge of the element at the middle of the parent */
+    left: 50%; /* position the left edge of the element at the middle of the parent */
+
+    transform: translate(-50%, -50%); /* This is a shorthand of translateX(-50%) and translateY(-50%) */
+}
+.services{
+    margin-top: 80px;
+    padding:20px;
+    text-align: center;
+}
+.card{
+    margin-left: 40px;
+    color: #ffffff90;
+    background-color: #68686892;
+    display:inline-block;
+    width: 15%;
+    padding: 0px 8px 0px;
+    border-radius:16px;
+    backdrop-filter: blur(24px);
+    border: 1px solid  #7e7e7e40;
+}
+.card img{
+    border-radius: 8px;
+    width: 100%;
+    height: auto;
+}
+.card p{
+    color: #93939390;
+}
