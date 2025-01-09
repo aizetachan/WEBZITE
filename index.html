@@ -81,12 +81,13 @@
           const prompt = document.getElementById('prompt-input').value;
           if (prompt) {
               // Llamada a la API de Flux
-              fetch(`https://api.bfl.ml/scalar/v1/get_result?prompt=${encodeURIComponent(prompt)}`, {
-                  method: 'GET',
+              fetch('https://api.bfl.ml/scalar/v1/flux-pro-1.1', {
+                  method: 'POST',
                   headers: {
                       'Authorization': 'Bearer eb047ce7-a124-40ee-a7c1-abba96858a8f',
                       'Content-Type': 'application/json'
-                  }
+                  },
+                  body: JSON.stringify({ prompt: prompt })
               })
               .then(response => response.json())
               .then(data => {
