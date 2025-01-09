@@ -14,11 +14,16 @@ document.getElementById('generate-button').addEventListener('click', function() 
             height: parseInt(height),
         };
 
-        fetch(`https://api.bfl.ml/v1/${model}`, {
+        const apiKey = 'sk-iYptsvcNujWNMKsx9rlXee0XWcRZQto2tIZCuk346VLDWMrt';
+        const apiUrl = model.startsWith('stable-diffusion') 
+            ? `https://platform.stability.ai/v2beta/stable-image/generate/${model}`
+            : `https://api.bfl.ml/v1/${model}`;
+
+        fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'accept': 'application/json',
-                'x-key': 'eb047ce7-a124-40ee-a7c1-abba96858a8f',
+                'x-key': apiKey,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
