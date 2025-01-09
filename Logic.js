@@ -1,5 +1,6 @@
 document.getElementById('generate-button').addEventListener('click', function() {
     const prompt = document.getElementById('prompt-input').value;
+    const model = document.getElementById('model-select').value;
     const width = document.getElementById('width-input').value;
     const height = document.getElementById('height-input').value;
 
@@ -13,7 +14,7 @@ document.getElementById('generate-button').addEventListener('click', function() 
             height: parseInt(height),
         };
 
-        fetch('https://api.bfl.ml/v1/flux-pro-1.1-ultra', {
+        fetch(`https://api.bfl.ml/v1/${model}`, {
             method: 'POST',
             headers: {
                 'accept': 'application/json',
