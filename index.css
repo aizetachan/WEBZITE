@@ -157,3 +157,36 @@ padding: 40px;
     min-height: 200px;
     background-color: #fff;
 }
+
+.input-container {
+    margin-bottom: 20px;
+}
+
+.input-field {
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.button {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.options-container {
+    margin-bottom: 20px;
+}
+
+.model-dimensions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.dropdown {
+    padding: 10px;
+}
+
+.dimension-input {
+    width: 80px;
+    padding: 10px;
+}
