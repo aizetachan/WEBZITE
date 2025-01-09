@@ -97,6 +97,7 @@
                       document.getElementById('image-display').innerHTML = `<img src="${imageUrl}" alt="Imagen generada" style="max-width: 100%;">`;
                   } else {
                       alert('No se pudo generar la imagen. Intenta de nuevo.');
+                      console.log('Respuesta de la API:', data);
                   }
               })
               .catch(error => {
