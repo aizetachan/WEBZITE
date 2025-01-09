@@ -81,7 +81,7 @@
           const prompt = document.getElementById('prompt-input').value;
           if (prompt) {
               // Llamada a la API de Flux
-              fetch('https://api.bfl.ml/scalar/v1/get_result', {
+              fetch(`https://api.bfl.ml/scalar/v1/get_result?prompt=${encodeURIComponent(prompt)}`, {
                   method: 'GET',
                   headers: {
                       'Authorization': 'Bearer eb047ce7-a124-40ee-a7c1-abba96858a8f',
@@ -92,9 +92,16 @@
               .then(data => {
                   // Suponiendo que la respuesta de la API contiene la URL de la imagen generada
                   const imageUrl = data.imageUrl; // Ajusta esto según la estructura de la respuesta de la API
-                  document.getElementById('image-display').innerHTML = `<img src="${imageUrl}" alt="Imagen generada" style="max-width: 100%;">`;
+                  if (imageUrl) {
+                      document.getElementById('image-display').innerHTML = `<img src="${imageUrl}" alt="Imagen generada" style="max-width: 100%;">`;
+                  } else {
+                      alert('No se pudo generar la imagen. Intenta de nuevo.');
+                  }
               })
-              .catch(error => console.error('Error:', error));
+              .catch(error => {
+                  console.error('Error:', error);
+                  alert('Hubo un error al generar la imagen.');
+              });
           } else {
               alert('Por favor, introduce un prompt.');
           }
