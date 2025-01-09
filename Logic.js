@@ -4,15 +4,13 @@ const API_URL = "https://api.stability.ai/v2beta/stable-image/generate/sd3.5-lar
 document.getElementById('generate-button').addEventListener('click', function() {
     const prompt = document.getElementById('prompt-input').value;
     const model = document.getElementById('model-select').value;
-    const width = document.getElementById('width-input').value;
-    const height = document.getElementById('height-input').value;
 
     if (prompt) {
         document.getElementById('loader').style.display = 'block';
         document.getElementById('image-display').innerHTML = '';
 
         if (model.startsWith('stable-diffusion')) {
-            generarImagenStableDiffusion(prompt, model);
+            generarImagenStableDiffusion(prompt);
         } else {
             generarImagenFlux(prompt, model, width, height);
         }
@@ -21,7 +19,7 @@ document.getElementById('generate-button').addEventListener('click', function() 
     }
 });
 
-function generarImagenFlux(prompt, model, width, height) {
+function generarImagenFlux(prompt, model) {
     const payload = {
         prompt: prompt,
         width: 1024,
@@ -55,34 +53,37 @@ function generarImagenFlux(prompt, model, width, height) {
     });
 }
 
-async function generarImagenStableDiffusion(prompt, model) {
-    const API_URL = `https://api.stability.ai/v2beta/stable-image/generate/${model}`;
-
-    const payload = {
-        prompt: prompt,
-        output_format: "jpeg"
-    };
+async function generarImagenStableDiffusion(prompt) {
+    const formData = new FormData();
+    formData.append("prompt", prompt);
+    formData.append("mode", "text-to-image");
+    formData.append("model", "sd3.5-large");
+    formData.append("aspect_ratio", "1:1");
+    formData.append("output_format", "png");
+    formData.append("cfg_scale", 7.5);
 
     try {
-        const response = await axios.postForm(
-            API_URL,
-            axios.toFormData(payload, new FormData()),
-            {
-                validateStatus: undefined,
-                responseType: "arraybuffer",
-                headers: {
-                    Authorization: `Bearer ${API_KEY}`,
-                    Accept: "image/*"
-                },
-            }
-        );
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${API_KEY}`,
+                Accept: "application/json",
+            },
+            body: formData,
+        });
 
-        if (response.status === 200) {
-            const blob = new Blob([response.data], { type: "image/jpeg" });
-            const imageUrl = URL.createObjectURL(blob);
+        if (!response.ok) {
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        if (data && data.image_base64) {
+            const imageUrl = `data:image/png;base64,${data.image_base64}`;
             mostrarImagen(imageUrl);
         } else {
-            throw new Error(`${response.status}: ${response.data.toString()}`);
+            console.error("No se encontró la imagen en la respuesta.");
+            document.getElementById('loader').style.display = 'none';
         }
     } catch (error) {
         console.error("Error al generar la imagen:", error);
@@ -99,6 +100,7 @@ function mostrarImagen(imageUrl) {
     document.getElementById('image-display').appendChild(img);
     document.getElementById('loader').style.display = 'none';
 }
+
 function obtenerResultado(requestId) {
     const resultUrl = 'https://api.bfl.ml/v1/get_result';
     const headers = {

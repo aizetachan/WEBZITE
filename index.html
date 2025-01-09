@@ -7,8 +7,6 @@
     <meta property="og:url" content="https://www.tu-sitio-web.com" />
     <meta property="og:image" content="https://www.tu-sitio-web.com/imagen-previsualizacion.jpg" />
     <link rel="stylesheet" href="./index.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
   </head>
 
   <body> 
@@ -81,11 +79,12 @@
       <label for="height-input">Alto:</label>
       <input type="number" id="height-input" value="768">
       
-      
+      <button id="generate-button">Generar Imagen</button>
       <div id="loader"></div>
       <div id="image-display">
         <!-- Aquí se mostrará la imagen generada -->
       </div>
     </section>
+    <script type="text/javascript" src="./Logic.js"></script>
   </body>
 </html>
