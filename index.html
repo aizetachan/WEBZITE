@@ -6,7 +6,7 @@
     <meta property="og:description" content="Descripción breve de la página" />
     <meta property="og:url" content="https://www.tu-sitio-web.com" />
     <meta property="og:image" content="https://www.tu-sitio-web.com/imagen-previsualizacion.jpg" />
-    <link rel="Stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./index.css">
   </head>
 
   <body> 
@@ -59,93 +59,11 @@
       <h2>Generador de Imágenes</h2>
       <input type="text" id="prompt-input" placeholder="Introduce tu prompt aquí">
       <button id="generate-button">Generar Imagen</button>
+      <div id="loader"></div>
       <div id="image-display">
         <!-- Aquí se mostrará la imagen generada -->
       </div>
     </section>
-    <script type="text/javascript">
-      (function(d, t) {
-          var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-          v.onload = function() {
-            window.voiceflow.chat.load({
-              verify: { projectID: '677982a7ae2ed1739d0c495c' },
-              url: 'https://general-runtime.voiceflow.com',
-              versionID: 'production'
-            });
-          }
-          v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
-      })(document, 'script');
-    </script>
-    <script>
-      document.getElementById('generate-button').addEventListener('click', function() {
-          const prompt = document.getElementById('prompt-input').value;
-          if (prompt) {
-              // Datos de la solicitud
-              const payload = {
-                  prompt: prompt,
-                  width: 1024,
-                  height: 768
-              };
-
-              // Realizar la solicitud POST para generar la imagen
-              fetch('https://api.bfl.ml/v1/flux-pro-1.1-ultra', {
-                  method: 'POST',
-                  headers: {
-                      'accept': 'application/json',
-                      'x-key': 'eb047ce7-a124-40ee-a7c1-abba96858a8f',
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(payload)
-              })
-              .then(response => response.json())
-              .then(data => {
-                  const requestId = data.id;
-                  if (requestId) {
-                      console.log(`Solicitud enviada con éxito. ID de solicitud: ${requestId}`);
-                      obtenerResultado(requestId);
-                  } else {
-                      alert('Error al enviar la solicitud.');
-                  }
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-                  alert('Hubo un error al generar la imagen.');
-              });
-          } else {
-              alert('Por favor, introduce un prompt.');
-          }
-      });
-
-      function obtenerResultado(requestId) {
-          const resultUrl = 'https://api.bfl.ml/v1/get_result';
-          const headers = {
-              'accept': 'application/json',
-              'x-key': 'eb047ce7-a124-40ee-a7c1-abba96858a8f'
-          };
-          const params = new URLSearchParams({ id: requestId });
-
-          // Consultar el resultado periódicamente hasta que esté listo
-          const interval = setInterval(() => {
-              fetch(`${resultUrl}?${params}`, { headers })
-                  .then(response => response.json())
-                  .then(result => {
-                      const status = result.status;
-                      if (status === 'Ready') {
-                          clearInterval(interval);
-                          const imageUrl = result.result.sample;
-                          console.log(`Imagen generada con éxito: ${imageUrl}`);
-                          document.getElementById('image-display').innerHTML = `<img src="${imageUrl}" alt="Imagen generada" style="max-width: 100%;">`;
-                      } else {
-                          console.log(`Estado de la generación: ${status}`);
-                      }
-                  })
-                  .catch(error => {
-                      console.error('Error:', error);
-                      clearInterval(interval);
-                      alert('Hubo un error al obtener el resultado.');
-                  });
-          }, 500);
-      }
-    </script>
+    <script type="text/javascript" src="./Logic.js"></script>
   </body>
 </html>
