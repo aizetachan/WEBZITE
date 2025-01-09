@@ -57,37 +57,5 @@ y<html>
       </div>
 
     </section>
-    <section id="prompt-section">
-      <h2>Generador de Imágenes</h2>
-      <input type="text" id="prompt-input" placeholder="Introduce tu prompt aquí">
-      <button id="generate-button">Generar Imagen</button>
-      <div id="image-display">
-        <!-- Aquí se mostrará la imagen generada -->
-      </div>
-    </section>
-    <script>
-    document.getElementById('generate-button').addEventListener('click', function() {
-        const prompt = document.getElementById('prompt-input').value;
-        if (prompt) {
-            // Llamada a la API para generar la imagen
-            fetch('URL_DE_TU_API', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ prompt: prompt })
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Suponiendo que la respuesta de la API contiene la URL de la imagen generada
-                const imageUrl = data.imageUrl;
-                document.getElementById('image-display').innerHTML = `<img src="${imageUrl}" alt="Imagen generada" style="max-width: 100%;">`;
-            })
-            .catch(error => console.error('Error:', error));
-        } else {
-            alert('Por favor, introduce un prompt.');
-        }
-    });
-    </script>
   </body>
 </html>
