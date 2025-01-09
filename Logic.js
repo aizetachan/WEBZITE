@@ -1,8 +1,17 @@
 document.getElementById('generate-button').addEventListener('click', function() {
     const prompt = document.getElementById('prompt-input').value;
+    const width = document.getElementById('width-input').value;
+    const height = document.getElementById('height-input').value;
+
     if (prompt) {
         document.getElementById('loader').style.display = 'block';
         document.getElementById('image-display').innerHTML = '';
+
+        const payload = {
+            prompt: prompt,
+            width: parseInt(width),
+            height: parseInt(height),
+        };
 
         fetch('https://api.bfl.ml/v1/flux-pro-1.1-ultra', {
             method: 'POST',
@@ -11,7 +20,7 @@ document.getElementById('generate-button').addEventListener('click', function() 
                 'x-key': 'eb047ce7-a124-40ee-a7c1-abba96858a8f',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ prompt: prompt, width: 1024, height: 768 })
+            body: JSON.stringify(payload)
         })
         .then(response => response.json())
         .then(data => {
