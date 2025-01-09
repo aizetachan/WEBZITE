@@ -61,9 +61,13 @@
       
       <label for="model-select">Modelo:</label>
       <select id="model-select">
+        <option value="flux-pro-1.1">Flux Pro 1.1</option>
+        <option value="flux-pro">Flux Pro</option>
+        <option value="flux-dev">Flux Dev</option>
         <option value="flux-pro-1.1-ultra">Flux Pro 1.1 Ultra</option>
-        <option value="otro-modelo">Otro Modelo</option>
-        <!-- Añade más modelos según la API -->
+        <option value="flux-pro-1.0-fill">Flux Pro 1.0 Fill</option>
+        <option value="flux-pro-1.0-canny">Flux Pro 1.0 Canny</option>
+        <option value="flux-pro-1.0-depth">Flux Pro 1.0 Depth</option>
       </select>
       
       <label for="width-input">Ancho:</label>
@@ -71,8 +75,6 @@
       
       <label for="height-input">Alto:</label>
       <input type="number" id="height-input" value="768">
-      
-      <!-- Añade más opciones según la documentación de la API -->
       
       <button id="generate-button">Generar Imagen</button>
       <div id="loader"></div>
