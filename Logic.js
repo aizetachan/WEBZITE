@@ -52,39 +52,54 @@ function generarImagenFlux(prompt, model, width, height) {
     });
 }
 
-function generarImagenStableDiffusion(prompt, model, width, height) {
+async function generarImagenStableDiffusion(prompt, model, width, height) {
     const payload = {
         prompt: prompt,
         width: parseInt(width),
         height: parseInt(height),
+        samples: 1,
+        cfg_scale: 7.5,
+        steps: 50
     };
 
-    fetch(`https://platform.stability.ai/v2beta/stable-image/generate/${model}`, {
-        method: 'POST',
-        headers: {
-            'accept': 'application/json',
-            'Authorization': 'Bearer sk-iYptsvcNujWNMKsx9rlXee0XWcRZQto2tIZCuk346VLDWMrt',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-    })
-    .then(response => response.json())
-    .then(data => {
-        const imageUrl = data.result?.sample; // Ajusta según la estructura de la respuesta
-        if (imageUrl) {
-            console.log(`Imagen generada con éxito: ${imageUrl}`);
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('image-display').innerHTML = `<img src="${imageUrl}" alt="Imagen generada">`;
+    try {
+        const response = await fetch(`https://api.stability.ai/v2beta/stable-image/generate/${model}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer sk-iYptsvcNujWNMKsx9rlXee0XWcRZQto2tIZCuk346VLDWMrt',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        if (data.artifacts && data.artifacts.length > 0) {
+            const imageUrl = data.artifacts[0].url;
+            console.log('Imagen generada:', imageUrl);
+            mostrarImagen(imageUrl);
         } else {
-            alert('Error al generar la imagen.');
+            console.error('No se encontraron artefactos en la respuesta.');
             document.getElementById('loader').style.display = 'none';
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Hubo un error al generar la imagen.');
+    } catch (error) {
+        console.error('Error al generar la imagen:', error);
         document.getElementById('loader').style.display = 'none';
-    });
+    }
+}
+
+function mostrarImagen(url) {
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = 'Imagen generada';
+    img.style.width = '512px';
+    img.style.height = '512px';
+    document.getElementById('image-display').appendChild(img);
+    document.getElementById('loader').style.display = 'none';
 }
 
 function obtenerResultado(requestId) {
