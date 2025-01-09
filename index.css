@@ -158,6 +158,10 @@ padding: 40px;
     background-color: #fff;
 }
 
+.prompt-container {
+    align-items: center;
+}
+
 .input-container {
     margin-bottom: 20px;
 }

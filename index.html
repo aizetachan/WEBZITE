@@ -57,30 +57,32 @@
     </section>
     <section id="prompt-section">
       <h2>Generador de Imágenes</h2>
-      <div id="input-container">
-        <input type="text" id="prompt-input" placeholder="Introduce tu prompt aquí" />
-        <button id="generate-button">Generar Imagen</button>
-    </div>
-    <div class="options-container">
-      <div class="model-dimensions">
-          <label for="model-select">Modelo:</label>
-          <select id="model-select" class="dropdown">
-              <option value="flux-pro-1.1">Flux Pro 1.1</option>
-              <option value="flux-pro">Flux Pro</option>
-              <option value="flux-dev">Flux Dev</option>
-              <option value="flux-pro-1.1-ultra">Flux Pro 1.1 Ultra</option>
-              <option value="flux-pro-1.0-fill">Flux Pro 1.0 Fill</option>
-              <option value="flux-pro-1.0-canny">Flux Pro 1.0 Canny</option>
-              <option value="flux-pro-1.0-depth">Flux Pro 1.0 Depth</option>
-          </select>
-          
-          <label for="width-input">Ancho:</label>
-          <input type="number" id="width-input" class="dimension-input" value="1024">
-          
-          <label for="height-input">Alto:</label>
-          <input type="number" id="height-input" class="dimension-input" value="768">
+      <div class="prompt-container">
+        <div id="input-container">
+          <input type="text" id="prompt-input" placeholder="Introduce tu prompt aquí" />
+          <button id="generate-button">Generar Imagen</button>
+        </div>
+        <div class="options-container">
+          <div class="model-dimensions">
+              <label for="model-select">Modelo:</label>
+              <select id="model-select" class="dropdown">
+                  <option value="flux-pro-1.1">Flux Pro 1.1</option>
+                  <option value="flux-pro">Flux Pro</option>
+                  <option value="flux-dev">Flux Dev</option>
+                  <option value="flux-pro-1.1-ultra">Flux Pro 1.1 Ultra</option>
+                  <option value="flux-pro-1.0-fill">Flux Pro 1.0 Fill</option>
+                  <option value="flux-pro-1.0-canny">Flux Pro 1.0 Canny</option>
+                  <option value="flux-pro-1.0-depth">Flux Pro 1.0 Depth</option>
+              </select>
+              
+              <label for="width-input">Ancho:</label>
+              <input type="number" id="width-input" class="dimension-input" value="1024">
+              
+              <label for="height-input">Alto:</label>
+              <input type="number" id="height-input" class="dimension-input" value="768">
+          </div>
       </div>
-  </div>
+    </div>
       <div id="loader"></div>
       <div id="image-display">
         <!-- Aquí se mostrará la imagen generada -->
