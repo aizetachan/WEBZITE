@@ -94,3 +94,44 @@ text-align:center;
 padding: 40px;
 
 }
+#prompt-section {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    border-radius: 8px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#prompt-input {
+    width: 60%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+#generate-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#generate-button:hover {
+    background-color: #0056b3;
+}
+
+#image-display {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    min-height: 200px;
+    background-color: #fff;
+}
