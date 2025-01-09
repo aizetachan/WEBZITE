@@ -80,24 +80,31 @@
       document.getElementById('generate-button').addEventListener('click', function() {
           const prompt = document.getElementById('prompt-input').value;
           if (prompt) {
-              // Llamada a la API de Flux
-              fetch('https://api.bfl.ml/scalar/v1/flux-pro-1.1', {
+              // Datos de la solicitud
+              const payload = {
+                  prompt: prompt,
+                  width: 1024,
+                  height: 768
+              };
+
+              // Realizar la solicitud POST para generar la imagen
+              fetch('https://api.bfl.ml/v1/flux-pro-1.1-ultra', {
                   method: 'POST',
                   headers: {
-                      'Authorization': 'Bearer eb047ce7-a124-40ee-a7c1-abba96858a8f',
+                      'accept': 'application/json',
+                      'x-key': 'eb047ce7-a124-40ee-a7c1-abba96858a8f',
                       'Content-Type': 'application/json'
                   },
-                  body: JSON.stringify({ prompt: prompt })
+                  body: JSON.stringify(payload)
               })
               .then(response => response.json())
               .then(data => {
-                  // Suponiendo que la respuesta de la API contiene la URL de la imagen generada
-                  const imageUrl = data.imageUrl; // Ajusta esto según la estructura de la respuesta de la API
-                  if (imageUrl) {
-                      document.getElementById('image-display').innerHTML = `<img src="${imageUrl}" alt="Imagen generada" style="max-width: 100%;">`;
+                  const requestId = data.id;
+                  if (requestId) {
+                      console.log(`Solicitud enviada con éxito. ID de solicitud: ${requestId}`);
+                      obtenerResultado(requestId);
                   } else {
-                      alert('No se pudo generar la imagen. Intenta de nuevo.');
-                      console.log('Respuesta de la API:', data);
+                      alert('Error al enviar la solicitud.');
                   }
               })
               .catch(error => {
@@ -108,6 +115,37 @@
               alert('Por favor, introduce un prompt.');
           }
       });
+
+      function obtenerResultado(requestId) {
+          const resultUrl = 'https://api.bfl.ml/v1/get_result';
+          const headers = {
+              'accept': 'application/json',
+              'x-key': 'eb047ce7-a124-40ee-a7c1-abba96858a8f'
+          };
+          const params = new URLSearchParams({ id: requestId });
+
+          // Consultar el resultado periódicamente hasta que esté listo
+          const interval = setInterval(() => {
+              fetch(`${resultUrl}?${params}`, { headers })
+                  .then(response => response.json())
+                  .then(result => {
+                      const status = result.status;
+                      if (status === 'Ready') {
+                          clearInterval(interval);
+                          const imageUrl = result.result.sample;
+                          console.log(`Imagen generada con éxito: ${imageUrl}`);
+                          document.getElementById('image-display').innerHTML = `<img src="${imageUrl}" alt="Imagen generada" style="max-width: 100%;">`;
+                      } else {
+                          console.log(`Estado de la generación: ${status}`);
+                      }
+                  })
+                  .catch(error => {
+                      console.error('Error:', error);
+                      clearInterval(interval);
+                      alert('Hubo un error al obtener el resultado.');
+                  });
+          }, 500);
+      }
     </script>
   </body>
 </html>
