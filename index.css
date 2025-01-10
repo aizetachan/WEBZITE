@@ -22,11 +22,6 @@ body{
     100% { transform: rotate(360deg); }
 }
 
-#image-display img {
-    max-width: 100%;
-    display: block;
-    margin: 20px auto;
-}
 nav {
     position:fixed;
     display:inline-block;
@@ -86,6 +81,10 @@ h1{
 
     transform: translate(-50%, -50%); /* This is a shorthand of translateX(-50%) and translateY(-50%) */
 }
+
+.h2 {
+    color:#fff;
+}
 .services{
     margin-top: 80px;
     padding:20px;
@@ -124,6 +123,7 @@ padding: 40px;
     color: #fff;
     border-radius: 8px;
     width: 80%;
+    height:100vh;
     margin-left: auto;
     margin-right: auto;
     display:flex;
@@ -137,7 +137,7 @@ padding: 40px;
     margin-bottom: 10px;
     border-radius: 4px;
     border: 1px solid #ccc;
-    width:100%;
+    width:60%;
 }
 
 #generate-button {
@@ -156,14 +156,20 @@ padding: 40px;
 }
 
 #image-display {
-    margin-top: 20px;
+    display: none;
     border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 4px;
-    min-height: 200px;
-    background-color: #fff;
+    border-radius: 24px;
+    border-color: #3498db;
+    width:fit-content; /* Cambiar a auto para que se ajuste al contenido */
 }
 
+#image-display img{
+  border-radius: 24px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
 .prompt-container {
     gap: 16px;
     align-items: center;
@@ -173,16 +179,17 @@ padding: 40px;
 }
 
 .input-container {
+    display:flex;
     width:60%;
     flex-direction: column;
     margin-bottom: 20px;
+    justify-content:center;
 
 
 
 }
 
 .input-field {
-
     padding: 10px;
     margin-right: 10px;
 }
@@ -209,11 +216,45 @@ padding: 40px;
 
 }
 
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
 .dropdown {
     padding: 10px;
+    padding-right: 36px; /* Aumenta el espacio para el icono */
+}
+
+.dropdown-icon {
+    position: absolute;
+    right: 8px; /* Ajusta la distancia desde el borde derecho */
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
 }
 
 .dimension-input {
     width: 80px;
     padding: 10px;
 }
+
+.aspect-ratio-container {
+  display: flex;
+  align-items: center;
+}
+
+.aspect-ratio-button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.aspect-ratio-button.selected {
+  background-color: #0056b3;
+}
+
